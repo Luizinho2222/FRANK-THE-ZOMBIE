@@ -1,2 +1,1 @@
-# FRANK-THE-ZOMBIE
-v1.1
+# Zombie-Shooter-stage-1
