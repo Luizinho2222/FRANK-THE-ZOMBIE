@@ -3,16 +3,31 @@ var player, shooterImg, shooter_shooting;
 var zombie, zombieimg; 
 var zombie2, zombie3, zombie4
 
+var bullet, bulletI;
+
+var explosion, explosionS, explosionE;
+
+var loseS;
+
+var rip
 
 function preload(){
   
-  shooterImg = loadImage("assets/shooter_2.png")
-  shooter_shooting = loadImage("assets/shooter_3.png")
+  shooterImg = loadImage("assets/shooter_2.png");
+  shooter_shooting = loadImage("assets/shooter_3.png");
 
-  zombieimg = loadImage("assets/zombie.png")
+  zombieimg = loadImage("assets/zombie.png");
 
-  bgImg = loadImage("assets/bg.jpeg")
+  bgImg = loadImage("assets/bg.jpeg");
 
+  bulletI = loadImage("assets/bullet.png");
+
+  explosionS = loadSound("assets/explosion.mp3");
+  explosionE = loadImage("assets/explosionE.png");
+
+  loseS = loadSound("assets/lose.mp3");
+
+  rip = loadImage("assets/ripI.png");
 }
 
 function setup() {
@@ -20,13 +35,10 @@ function setup() {
   
   createCanvas(windowWidth,windowHeight);
 
-  //adicionando a imagem de fundo
-  bg = createSprite(displayWidth/2-20,displayHeight/2-40,20,20)
-  bg.addImage(bgImg)
-  bg.scale = 1.1
+   bg = createSprite(displayWidth/2-20,displayHeight/2-40,20,20)
+   bg.addImage(bgImg)
+   bg.scale = 1.2
   
-
-//criando o sprite do jogador
    player = createSprite(displayWidth-1150, displayHeight-300, 50, 50);
    player.addImage(shooterImg)
    player.scale = 0.48;
@@ -58,14 +70,6 @@ function setup() {
    zombie4.scale = 0.2;
    zombie4.debug = false;
    zombie4.setCollider("rectangle",0,0,500,950);
-
-
-
-
-
-
-
-
 }
 
 function draw() {
@@ -86,19 +90,79 @@ if(keyDown("DOWN_ARROW")||touches.length>0){
  player.y = player.y+10
 }
 
+/*
 
+
+if(bullet.isTouching(zombie)){
+
+  colision();
+
+}
+
+if(bullet.isTouching(zombie2)){
+
+  colision();
+
+}
+
+if(bullet.isTouching(zombie3)){
+
+  colision();
+
+}
+
+if(bullet.isTouching(zombie4)){
+
+  colision();
+
+}
+
+
+*/
 
 if(keyWentDown("space")){
  
-  player.addImage(shooter_shooting)
- 
+  player.addImage(shooter_shooting);
+   
+  shoot();
+
+
 }
 
-//o jogador volta à imagem original quando pararmos de pressionar a barra de espaço
+
 else if(keyWentUp("space")){
   player.addImage(shooterImg)
 }
 
 drawSprites();
+
+}
+
+function shoot(){
+
+  bullet = createSprite(player.x + 100,  player.y - 40, 50, 50);
+  bullet.addImage(bulletI); 
+  bullet.scale = 0.05;
+  bullet.velocityX = 8;
+  
+  
+  explosionS.play();
+  explosionS.setVolume(0.4)
+  explosion = createSprite(player.x + 100,  player.y - 40, 50, 50);
+  explosion.addImage(explosionE);
+  explosion.scale = 0.09; 
+
+  //Falta adicionar LIFETIME à explosionE 
+}
+
+function colision(){
+
+  zombieimg = null;
+
+
+
+
+
+
 
 }
